@@ -66,6 +66,7 @@
       "/usr/share/dict/words"))
 
 (defn -main
-  [output-file & args]
-  (let [dictionary (read-dictionary (dictionary-file))]
-    (create-mash-dictionary output-file dictionary 2000)))
+  [output-file size & args]
+  (let [dictionary (read-dictionary (dictionary-file))
+        word-count (Integer/parseInt size)]
+    (create-mash-dictionary output-file dictionary word-count)))
