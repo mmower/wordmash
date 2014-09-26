@@ -18,11 +18,7 @@
 (defn split-point
   "Return a random split point for word w between the second and penultimate characters."
   [w]
-  {:pre [(> (count w) 1)]}
-  (let [n (rand-int (count w))]
-    (if (and (> (dec (count w)) n 0))
-      n
-      (recur w))))
+  (inc (rand-int (dec (count w)))))
 
 (defn split-word
   "Splits the word w into two chunks around a randomly choosen split point."
