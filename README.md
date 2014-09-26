@@ -1,6 +1,16 @@
 # wordmash
 
-Mash together dictionary words to form new English like words.
+If you've ever wanted to create a nonsense English dictionary then Wordmash is for you. Wordmash "mashes together" words from a dictionary to form new words that are somewhat like the originals.
+
+To create a new word, Wordmash takes two randomly selected words from the original dictionary, selects a random mid-point for each word, and
+splits them to form two beginnings and two endings. It then takes the first beginning and second ending and makes a new word. Here's an example:
+
+* Randomly choosen words "unbalance" and "guayacan"
+* For "unbalance" select random mid-point, e.g. 3
+* Split "unbalance" at 3 to form "unb" and "alance"
+* For "guayacan" select random mid-point, e.g. 4
+* Split "guayacan" at 4 to form "guay" and "acan"
+* Combine "unb" with "acan" to form new word "unbacan"
 
 ## Usage
 
