@@ -1,4 +1,4 @@
-(defproject wordmash "0.1.2-SNAPSHOT"
+(defproject wordmash "0.1.3-SNAPSHOT"
   :description "Mash words together to form strange new words"
   :url "https://github.com/mmower/wordmash"
   :license {:name "Eclipse Public License"

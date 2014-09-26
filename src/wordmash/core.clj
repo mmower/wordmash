@@ -4,6 +4,7 @@
   (:gen-class :main true))
 
 (defn rules-file
+  "Return the path to the default rules file or an alternate file if the RULESFILE environment var is set."
   []
   (or (System/getenv "RULESFILE")
       "resources/rules.edn"))
@@ -39,6 +40,7 @@
     (str/join [b1 e2])))
 
 (defn rule-set
+  "Return a sequence of regular expressions that represent invalid patterns for viable words."
   []
   (vals (edn/read-string (slurp (rules-file)))))
 
@@ -60,10 +62,13 @@
   (filter viable-word? (word-stream dictionary)))
 
 (defn create-mash-dictionary
+  "Take size viable words from the word-mash word stream."
   [dictionary size]
   (str/join "\n" (sort (take size (viable-word-stream dictionary)))))
 
 (defn -main
-  [size & args]
-  (let [word-count (Integer/parseInt size)]
-    (println (create-mash-dictionary (read-dictionary) word-count))))
+  [& args]
+  (let [word-count (if-let [arg (first args)]
+                     (Integer/parseInt arg)
+                     500)]
+      (println (create-mash-dictionary (read-dictionary) word-count))))
