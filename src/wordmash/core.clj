@@ -47,13 +47,18 @@
   (not (re-find invalid-word-regex w)))
 
 (defn word-stream
+  "Return a lazy sequence of mashed words."
+  [dictionary]
+  (cons (word-mash dictionary) (lazy-seq (word-stream dictionary))))
+
+(defn viable-word-stream
   "Return a lazy sequence of viable mashed words."
   [dictionary]
-  (filter viable-word? (cons (word-mash dictionary) (lazy-seq (word-stream dictionary)))))
+  (filter viable-word? (word-stream dictionary)))
 
 (defn create-mash-dictionary
   [mash-file dictionary size]
-  (spit mash-file (str/join "\n" (sort (take size (word-stream dictionary))))))
+  (spit mash-file (str/join "\n" (sort (take size (viable-word-stream dictionary))))))
 
 (defn dictionary-file
   []
