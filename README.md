@@ -17,16 +17,16 @@ Wordmash includes some simple rules that try to ensure generated words seem Engl
 ## Usage
 
     lein uberjar
-    java -jar target/wordmash-0.1.2-SNAPSHOT-standalone.jar <output-dictionary> <word-count>
+    cat /usr/share/dict/words | java -jar target/wordmash-0.1.3-SNAPSHOT-standalone.jar [<word-count>]
 
-by default it will look in `/usr/share/dict/words`, to use a different dictionary pass
-the path in `DICTFILE` environment:
+Pass in the dictionary of words you want to use as a source via stdin, the mashed dictionary will be written to stdout. By default 500
+words are generated but you can pass a word-count argument to generate more or less words.
 
-    DICTFILE=/my/special/dict/words java -jar ...
-
-to use a custom rules files pass the path to your own edn file using the `RULESFILE` environment variable:
+To use a custom rules files pass the path to your own edn file using the `RULESFILE` environment variable:
 
     RULESFILE=/my/rules.edn java -jar ...
+
+Rules are regular expression patterns, see the resources/rules.edn file for the format. The map keys are purely for describing the rules.
 
 ## License
 
