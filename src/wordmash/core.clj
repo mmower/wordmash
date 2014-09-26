@@ -8,16 +8,10 @@
   (or (System/getenv "RULESFILE")
       "resources/rules.edn"))
 
-(defn dictionary-file
-  []
-  (or (System/getenv "DICTFILE")
-      "/usr/share/dict/words"))
-
 (defn read-dictionary
-  "Return a sequence of dictionary words between 4 and 8 characters long and containing no upper case letters."
-  [dict-file]
-  (->> (slurp dict-file)
-       (str/split-lines)
+  "Return a sequence of dictionary words, parsed from STDIN, between 4 and 8 characters long and containing no upper case letters."
+  []
+  (->> (line-seq (java.io.BufferedReader. *in*))
        (filter #(> 9 (count %) 3))
        (filter #(= % (str/lower-case %)))))
 
@@ -66,11 +60,10 @@
   (filter viable-word? (word-stream dictionary)))
 
 (defn create-mash-dictionary
-  [mash-file dictionary size]
-  (spit mash-file (str/join "\n" (sort (take size (viable-word-stream dictionary))))))
+  [dictionary size]
+  (str/join "\n" (sort (take size (viable-word-stream dictionary)))))
 
 (defn -main
-  [output-file size & args]
-  (let [dictionary (read-dictionary (dictionary-file))
-        word-count (Integer/parseInt size)]
-    (create-mash-dictionary output-file dictionary word-count)))
+  [size & args]
+  (let [word-count (Integer/parseInt size)]
+    (println (create-mash-dictionary (read-dictionary) word-count))))
